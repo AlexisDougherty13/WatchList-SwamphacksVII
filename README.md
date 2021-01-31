@@ -6,4 +6,15 @@ Description: Whether together or remote, watching movies with friends and family
 
 Run `python flask_app.py` in the root directory to start the server. Will need the .env file to connect to the database. 
 
-Contact Alexis Dougherty at alexisdougherty@ufl.edu for more information.
+You will need these python packages to run:
+`pip install Flask`
+
+from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
+from jinja2 import escape, Markup
+import requests
+from flask_cors import CORS
+import json
+
+Contact Alexis Dougherty at alexisdougherty@ufl.edu or https://swamphacks-vii.slack.com/team/U01KXL5RCNB for more information.
