@@ -1,4 +1,5 @@
-# WatchList-SwamphacksVII
+# WatchList
+## SwamphacksVII
 
 DevPost: https://devpost.com/software/watch-list
 
