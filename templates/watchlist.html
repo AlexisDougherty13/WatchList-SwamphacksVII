@@ -5,7 +5,31 @@
 	<link rel="stylesheet" href="../static/main.css">
 </head>  
 <style>
-body { background-image: url("../static/Universe - 13100.gif"); }
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+  font-size: 17px;
+}
+
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
+
+.content {
+  position: relative;
+
+  width: 100%;
+}
+
+
 main { margin: 5em; }
 select { height: 75px; }
 h1, p { color: white; }
@@ -82,6 +106,10 @@ img:hover {
 
 </style>
 <body>  
+	<video autoplay muted loop id="myVideo">
+	  <source src="../static/UniverseBackground.mp4" type="video/mp4">
+	</video>
+	<div class="content">
 	<main>
 		<center>
 		<br><br>
@@ -116,7 +144,7 @@ img:hover {
 		</center>
 		
 	</main>
-
+	</div>
 </body> 
 
 <script type = "text/javascript">

@@ -5,7 +5,33 @@
 	<link rel="stylesheet" href="../static/main.css">
 </head>  
 <style>
-body { background-image: url("../static/Universe - 13100.gif"); }
+<!-- body { background-image: url("https://drive.google.com/file/d/1TDnRMGawGMiCulhgkR1jRi2jMI9sg4Pm/view?usp=sharing");
+		background-size: cover;
+		background-repeat: no-repeat; } -->
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+  font-size: 17px;
+}
+
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
+
+.content {
+  position: relative;
+
+  width: 100%;
+}
+
 main { margin: 5em; }
 select { height: 75px; }
 h1, h2, p { color: white; }
@@ -15,6 +41,10 @@ h1, h2, p { color: white; }
 			color: #FFFFFF; }
 </style>
 <body>  
+	<video autoplay muted loop id="myVideo">
+	  <source src="../static/UniverseBackground.mp4" type="video/mp4">
+	</video>
+	<div class="content">
 	<main>
 		<center>
 		<br>
@@ -31,5 +61,6 @@ h1, h2, p { color: white; }
 		<p>{{ message }}</p>
 		</center>
 	</main>
+	</div>
 </body>  
 </html>  
