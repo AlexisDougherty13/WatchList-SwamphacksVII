@@ -1,1 +1,35 @@
-
+<html>  
+<head>  
+    <title>Watch List: Create a New List</title>  
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="../static/main.css">
+</head>  
+<style>
+body { background-image: url("../static/Universe - 13100.gif"); }
+main { margin: 5em; }
+select { height: 75px; }
+h1, h2, p { color: white; }
+.button { box-shadow: inset 0 0 0 1px #FFFFFF;
+  color: #FFFFFF !important; }
+.button2 { box-shadow: inset 0 0 0 1px #FFFFFF;
+			color: #FFFFFF; }
+</style>
+<body>  
+	<main>
+		<center>
+		<br>
+		<h1>Watch List</h1>
+		<br>
+		<p>{{ error }}</p>
+		<br>
+		<h2>Create a List</h2>
+		
+		<form action = "{{ url_for('createList') }}" autocomplete="off" method = "post">
+			<input class="button" type="text" name="name" value="Name"><br>
+			<input class="button, button2" type="submit" value="Create List">
+		</form>
+		<p>{{ message }}</p>
+		</center>
+	</main>
+</body>  
+</html>  

@@ -1,0 +1,484 @@
+<html>  
+<head>  
+    <title>Watch List: {{ listName }}</title>  
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+	<link rel="stylesheet" href="../static/main.css">
+</head>  
+<style>
+body { background-image: url("../static/Universe - 13100.gif"); }
+main { margin: 5em; }
+select { height: 75px; }
+h1, p { color: white; }
+.button { box-shadow: inset 0 0 0 1px #FFFFFF;
+  color: #FFFFFF !important; }
+
+
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+img:hover {
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+
+
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  /*display: inline-block;*/
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+
+</style>
+<body>  
+	<main>
+		<center>
+		<br><br>
+		<h1>{{ listName }}</h1>
+		<form action = "{{ url_for('deleteFromList') }}" method = "post">
+			{% if movies|length > 0 %}
+			<select multiple id="list" name="list">
+				{% for i in movies %}
+					<option value="{{ i }}">{{ i }}</option><br>
+				{% endfor %}
+				<input type="hidden" name="id" value="{{ ID }}">
+				<br>
+				
+				<input class="button" type="submit" value="Delete Selected Movies">
+				
+			</select>
+			{% endif %}
+	    </form>
+			
+		<form action = "{{ url_for('addToList') }}" autocomplete="off" method = "post">
+			<div class="autocomplete">
+			<input class="button" id="myInput" type="text" name="title" value="New Movie Name"><br>
+			</div>
+			<input type="hidden" name="id" value="{{ ID }}">
+			<input class="button" type="submit" value="Add New Movie">
+		</form>
+		{% if movies|length > 0 %}
+		<br><br><br><br>
+		<p>Hover over the hat to pick a random movie to watch</p>
+		<img src="../static/tophat.png" width="25%" height="25%" onmouseover = "pickRand()">
+		{% endif %}
+		</center>
+		
+	</main>
+
+</body> 
+
+<script type = "text/javascript">
+function pickRand() {
+	setTimeout(() => {   
+	let myMovies = {{ movies | tojson }};
+	var winner = myMovies[Math.floor(Math.random() * myMovies.length)];
+	alert(winner + " was drawn from the hat");
+	}, 2000);
+}
+
+/*let movieTitleOptions = {{ allTitles | tojson }};
+document.write(movieTitleOptions);
+colsole.log(movieTitleOptions);*/
+var fillIns = [
+	"Borat: Cultural Learnings of America for Make Benefit Glorious Nation of Kazakhstan",
+"Harold & Kumar Go to White Castle",
+"Life of Brian",
+"The MatchMaker",
+"The Dukes of Hazzard",
+"Analyze That",
+"Office Space",
+"Super Troopers",
+"Scent of a Woman",
+"Bad Santa",
+"Ron White: You Can't Fix Stupid",
+"Conspiracy Theory",
+"My Cousin Vinny",
+"Rosemary's Baby",
+"Happy Accidents",
+"Gadjo dilo",
+"Le fabuleux destin d'Am├⌐lie Poulain",
+"Vanilla Sky",
+"The Silence of the Lambs",
+"Hannibal",
+"28 Days Later...",
+"28 Weeks Later",
+"Dracula",
+"Twelve Monkeys",
+"Dead Again",
+"The Crow",
+"Underworld",
+"Sin City",
+"Primal Fear",
+"The Last Samurai",
+"Braveheart",
+"300",
+"Black Hawk Down",
+"Wanted",
+"Scary Movie 4",
+"Burn After Reading",
+"The Matrix",
+"The Matrix Reloaded",
+"The Matrix Revolutions",
+"Lucky Number Slevin",
+"Fight Club",
+"Public Enemies",
+"Surrogates",
+"Lord of War",
+"Before Sunrise",
+"Max Payne",
+"Step Brothers",
+"The Negotiator",
+"There Will Be Blood",
+"Legally Blonde",
+"UHF",
+"Ed and His Dead Mother",
+"Super Size Me",
+"Rat Race",
+"The Break-Up",
+"Evolution",
+"Man of the Year",
+"The Family Man",
+"Jamaica Inn",
+"Sabotage",
+"The 39 Steps",
+"Easy Virtue",
+"Master and Commander: The Far Side of the World",
+"Back to School",
+"X-Men",
+"Romeo + Juliet",
+"Strictly Ballroom",
+"Moulin Rouge!",
+"A Beautiful Mind",
+"Forrest Gump",
+"Cast Away",
+"The Count of Monte Cristo",
+"Van Helsing",
+"Pirates of the Caribbean: Dead Man's Chest",
+"Pirates of the Caribbean: The Curse of the Black Pearl",
+"Pirates of the Caribbean: At World's End",
+"The League of Extraordinary Gentlemen",
+"The Perfect Storm",
+"U-571",
+"The Bourne Supremacy",
+"The Bourne Identity",
+"The Bourne Ultimatum",
+"Jumper",
+"Mission: Impossible III",
+"Ocean's Thirteen",
+"21",
+"Casino Royale",
+"Catch Me If You Can",
+"Mr. & Mrs. Smith",
+"The Transporter",
+"S.W.A.T.",
+"U.S. Marshals",
+"The Recruit",
+"The Guardian",
+"I Am Legend",
+"AVP: Alien vs. Predator",
+"Deep Impact",
+"Transformers",
+"The Italian Job",
+"Gone in Sixty Seconds",
+"Roxanne",
+"The Simpsons Movie",
+"Indiana Jones and the Kingdom of the Crystal Skull",
+"Rumor Has It...",
+"The Illusionist",
+"Avatar",
+"RED",
+"Night at the Museum",
+"Monty Python and the Holy Grail",
+"Young Frankenstein",
+"Spaceballs",
+"All of Me",
+"The Adventures of Bob & Doug McKenzie: Strange Brew",
+"Caddyshack II",
+"The Butcher's Wife",
+"A Series of Unfortunate Events",
+"National Treasure: Book of Secrets",
+"Time Bandits",
+"Charlie and the Chocolate Factory",
+"The Hitchhiker's Guide to the Galaxy",
+"Return to Oz",
+"The Black Cauldron",
+"Discovering the Real World of Harry Potter",
+"Harry Potter and the Sorcerer's Stone",
+"Harry Potter and the Chamber of Secrets",
+"Harry Potter and the Prisoner of Azkaban",
+"Harry Potter and the Goblet of Fire",
+"Harry Potter and the Half-Blood Prince",
+"Corpse Bride",
+"Harry Potter and the Order of the Phoenix",
+"Role Models",
+"The Departed",
+"Carlito's Way",
+"Snatch",
+"Collateral",
+"The Boondock Saints",
+"Donnie Brasco",
+"Men of Honor",
+"The Untouchables",
+"Pulp Fiction",
+"Gotti",
+"Reservoir Dogs",
+"Scarface",
+"The Godfather",
+"The Godfather: Part II",
+"The Godfather: Part III",
+"Goodfellas",
+"25th Hour",
+"Assault on Precinct 13",
+"Narc",
+"Inside Man",
+"The Usual Suspects",
+"Enemy at the Gates",
+"Phone Booth",
+"Training Day",
+"A Man Apart",
+"Man on Fire",
+"Sniper",
+"The Hunted",
+"Bad Boys II",
+"Full Metal Jacket",
+"Basic",
+"The Score",
+"Tears of the Sun",
+"The Bank Job",
+"21 Grams",
+"8 Mile",
+"The Edge",
+"Glengarry Glen Ross",
+"True Romance",
+"Empire",
+"Original Sin",
+"Quantum of Solace",
+"Pitch Black",
+"The Chronicles of Riddick",
+"Pitch Black",
+"The Chronicles of Riddick: Dark Fury",
+"The Chronicles of Riddick",
+"Shooter",
+"Bullet",
+"Jeeves and Wooster",
+"The Young Ones",
+"Fawlty Towers",
+"Father Ted",
+"Extras",
+"Knowing Me, Knowing You with Alan Partridge",
+"The Black Adder",
+"Mr. Bean",
+"It's Always Sunny in Philadelphia",
+"Arrested Development",
+"The Out of Towners",
+"The Secret of NIMH",
+"Duck Soup",
+"Horse Feathers",
+"Monkey Business",
+"Animal Crackers",
+"The Cocoanuts",
+"It's a Mad Mad Mad Mad World",
+"Sabrina",
+"Mr. Bean's Holiday",
+"Barefoot in the Park",
+"Fiddler on the Roof",
+"Robin Hood",
+"Ratatouille",
+"Roman Holiday",
+"Breakfast at Tiffany's",
+"I Remember Mama",
+"Life with Father",
+"My Man Godfrey",
+"The Thin Man",
+"After the Thin Man",
+"Another Thin Man",
+"Shadow of the Thin Man",
+"The Thin Man Goes Home",
+"Song of the Thin Man",
+"Myrna Loy: So Nice to Come Home to",
+"Way Out West",
+"Block-Heads",
+"Chickens Come Home",
+"A Little Soap and Water",
+"Blondie",
+"Blondie Meets the Boss",
+"Blondie Brings Up Baby",
+"Blondie on a Budget",
+"Blondie Has Servant Trouble",
+"Blondie Plays Cupid",
+"Blondie Goes Latin",
+"Blondie Goes to College",
+"Blondie Takes a Vacation",
+"Blondie in Society",
+"The Long, Long Trailer",
+"The Educational Archives: Sex & Drugs",
+"The Educational Archives: Social Engineering 101",
+"Inside the Living Body",
+"Lost at Sea: The Search for Longitude",
+"Queen Live at Wembley '86",
+"U2: The Best of 1990-2000",
+"Actorul si salbaticii",
+"A Christmas Story",
+"National Lampoon's Christmas Vacation",
+"How the Grinch Stole Christmas!",
+"An Inconvenient Truth",
+"The Bucket List",
+"Pride and Prejudice",
+"Mamma Mia",
+"Mamma Mia: Here We Go Again",
+	];
+
+autocomplete(document.getElementById("myInput"), fillIns);
+
+
+function autocomplete(inp, arr) {
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+              b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+      x[i].parentNode.removeChild(x[i]);
+    }
+  }
+}
+/*execute a function when someone clicks in the document:*/
+document.addEventListener("click", function (e) {
+    closeAllLists(e.target);
+});
+}
+</script>
+
+</html>
