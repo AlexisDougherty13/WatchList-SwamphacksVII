@@ -15,4 +15,6 @@ You will need these python packages to run: <br>
 `pip install requests`
 `pip install Flask-Cors`
 
+Website is best viewed in Edge. 
+
 Contact Alexis Dougherty at alexisdougherty@ufl.edu or https://swamphacks-vii.slack.com/team/U01KXL5RCNB for more information.
