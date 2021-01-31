@@ -1,7 +1,7 @@
 # WatchList
 ## Swamphacks VII
 
-DevPost: https://devpost.com/software/watch-list
+DevPost: https://devpost.com/software/watch-list <br>
 Demo Video: https://youtu.be/gjNt1aHaa8I
 
 Description: Whether together or remote, watching movies with friends and family is a fun activity. Watch List is a web app for groups or individuals to create and share a movie bucket list.
